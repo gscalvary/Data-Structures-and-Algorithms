@@ -4,13 +4,13 @@ public class HashTable {
 
     private int tableSize;
     private int numEntries;
-    private HashEntry[] table;
+    private HashTableEntry[] table;
 
     HashTable(int tableSize) {
 
         numEntries = 0;
         this.tableSize = tableSize;
-        table = new HashEntry[tableSize];
+        table = new HashTableEntry[tableSize];
 
         // initialize the table
         clear();
@@ -40,12 +40,11 @@ public class HashTable {
     public int get(String key) {
 
         int hash = getHash(key) % tableSize;
-        System.out.println("Modifying hash in get() to " + hash);
 
         if(table[hash] == null) {
             return -1;
         } else {
-            HashEntry entry = table[hash];
+            HashTableEntry entry = table[hash];
             while (entry != null && !entry.getKey().equals(key)) {
                 entry = entry.getNextEntry();
             }
@@ -63,19 +62,18 @@ public class HashTable {
     public void insert(String key, int value) {
 
         int hash = getHash(key) % tableSize;
-        System.out.println("Modifying hash in insert() to " + hash);
 
         if(table[hash] == null) {
-            table[hash] = new HashEntry(key, value);
+            table[hash] = new HashTableEntry(key, value);
         } else {
-            HashEntry entry = table[hash];
+            HashTableEntry entry = table[hash];
             while(entry.getNextEntry() != null && !entry.getKey().equals(key)) {
                 entry = entry.getNextEntry();
             }
             if(entry.getKey().equals(key)) {
                 entry.setValue(value);
             } else {
-                entry.setNextEntry(new HashEntry(key, value));
+                entry.setNextEntry(new HashTableEntry(key, value));
             }
         }
         
@@ -88,11 +86,10 @@ public class HashTable {
     public void remove(String key) {
 
         int hash = getHash(key) % tableSize;
-        System.out.println("Modifying hash in remove() to " + hash);
 
         if(table[hash] != null) {
-            HashEntry prevEntry = null;
-            HashEntry entry = table[hash];
+            HashTableEntry prevEntry = null;
+            HashTableEntry entry = table[hash];
             while(entry.getNextEntry() != null && !entry.getKey().equals(key)) {
                 prevEntry = entry;
                 entry = entry.getNextEntry();
@@ -120,7 +117,6 @@ public class HashTable {
             hash += tableSize;
         }
 
-        System.out.println("Hashing in getHash(), key " + key + " into " + hash);
         return hash;
     }
 
@@ -131,7 +127,7 @@ public class HashTable {
 
         for(int i = 0; i < tableSize; i++) {
             System.out.print("\nSlot " + (i + 1) + ": ");
-            HashEntry entry = table[i];
+            HashTableEntry entry = table[i];
             while(entry != null) {
                 System.out.print(entry.getValue() + " ");
                 entry = entry.getNextEntry();

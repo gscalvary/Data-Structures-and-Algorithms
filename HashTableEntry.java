@@ -1,12 +1,12 @@
 package com.oliver;
 
-public class HashEntry {
+public class HashTableEntry {
 
     private String key;
     private int value;
-    private HashEntry nextEntry;
+    private HashTableEntry nextEntry;
 
-    HashEntry(String key, int value) {
+    HashTableEntry(String key, int value) {
 
         this.key = key;
         this.value = value;
@@ -21,10 +21,10 @@ public class HashEntry {
         return key;
     }
 
-    //  -> HashEntry
+    //  -> HashTableEntry
     // Return the next hash entry after this hash entry in the hash table chain.
     // Strategy: Domain Knowledge
-    public HashEntry getNextEntry() {
+    public HashTableEntry getNextEntry() {
 
         return nextEntry;
     }
@@ -45,10 +45,10 @@ public class HashEntry {
         this.value = value;
     }
 
-    // HashEntry -> void
+    // HashTableEntry -> void
     // Given a hash entry set the next hash entry to it.
     // Strategy: Domain Knowledge
-    public void setNextEntry(HashEntry entry) {
+    public void setNextEntry(HashTableEntry entry) {
 
         nextEntry = entry;
     }
