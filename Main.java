@@ -12,6 +12,8 @@
 // Linked List - I implemented a linked list with specific functionality to support queues and stacks.
 // Queue       - The queue is built upon the linked list.  Objects added to a queue are placed at the end of the line
 //               while objects removed from the queue are taken from the front of the line, so a queue is FIFO.
+// Stack       - The stack is built upon the linked list.  Objects added to a stack are placed on top of the pile and
+//               objects removed from the stack are taken from the top of the pile, so a stack is LIFO.
 //
 // Algorithms
 // -----------------------
@@ -44,8 +46,9 @@ public class Main {
             System.out.println("\nOperations\n");
             System.out.println("1. Work with a linked list.");
             System.out.println("2. Work with a queue.");
-            System.out.println("3. Work with a hash table.");
-            System.out.println("4. Work with mergesort.");
+            System.out.println("3. Work with a stack.");
+            System.out.println("4. Work with a hash table.");
+            System.out.println("5. Work with mergesort.");
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -55,13 +58,16 @@ public class Main {
                     queues();
                     break;
                 case 3:
-                    hashTables();
+                    stacks();
                     break;
                 case 4:
+                    hashTables();
+                    break;
+                case 5:
                     mergeSort();
                     break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2, 3 or 4.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4 or 5.");
                     break;
             }
 
@@ -167,6 +173,46 @@ public class Main {
 
             queue.print();
             System.out.println("Do you want to continue using this queue? (y or n)");
+            ch = scanner.next().charAt(0);
+
+        } while (ch == 'Y' || ch == 'y');
+    }
+
+    private static void stacks() {
+
+        Stack stack = new Stack();
+
+        char ch;
+
+        do {
+            System.out.println("\nOperations\n");
+            System.out.println("1. inject");
+            System.out.println("2. eject");
+            System.out.println("3. number of entries");
+            System.out.println("4. clear");
+
+            switch(scanner.nextInt()) {
+                case 1:
+                    System.out.println("Enter entry value:");
+                    stack.inject(scanner.next());
+                    break;
+                case 2:
+                    System.out.println("Object returned: " + stack.eject());
+                    break;
+                case 3:
+                    System.out.println("Number of entries = " + stack.getSize());
+                    break;
+                case 4:
+                    stack.clear();
+                    System.out.println("Stack successfully cleared!");
+                    break;
+                default:
+                    System.out.println("Whoops, try again by typing 1, 2, 3 or 4.");
+                    break;
+            }
+
+            stack.print();
+            System.out.println("Do you want to continue using this stack? (y or n)");
             ch = scanner.next().charAt(0);
 
         } while (ch == 'Y' || ch == 'y');
