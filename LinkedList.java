@@ -91,18 +91,51 @@ public class LinkedList {
     }
 
     //  -> void
+    // Clear the linked list.
+    // Strategy: Domain Knowledge
+    public void clear() {
+
+        head = null;
+        size = 0;
+    }
+
+    //  -> void
     // Print the linked list.
     // Strategy: Function Composition
     public void print() {
 
         LinkedListEntry entry = head;
 
-        System.out.print("\n");
+        if(size == 0) {
+            System.out.print("\nThe linked list is empty.\n");
+        } else {
+            System.out.print("\nThe linked list now contains:\n");
+            while(true) {
+                if(entry == null) break;
+                System.out.println(entry.getValue());
+                entry = entry.getNext();
+            }
+        }
 
-        while(true) {
-            if(entry == null) break;
-            System.out.println(entry.getValue());
-            entry = entry.getNext();
+        System.out.print("\n");
+    }
+
+    // String -> void
+    // Given a string representing how this linked list is being used, print the linked list.
+    // Strategy: Function Composition
+    public void print(String use) {
+
+        LinkedListEntry entry = head;
+
+        if(size == 0) {
+            System.out.print("\nThe " + use + " is empty.\n");
+        } else {
+            System.out.print("\nThe " + use + " now contains:\n");
+            while(true) {
+                if(entry == null) break;
+                System.out.println(entry.getValue());
+                entry = entry.getNext();
+            }
         }
 
         System.out.print("\n");

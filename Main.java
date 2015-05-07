@@ -10,6 +10,8 @@
 //               complexity is O(n) where n is the greatest number of collided entries in any hash table slot.  This
 //               implementation uses linked chaining to handle collisions.
 // Linked List - I implemented a linked list with specific functionality to support queues and stacks.
+// Queue       - The queue is built upon the linked list.  Objects added to a queue are placed at the end of the line
+//               while objects removed from the queue are taken from the front of the line, so a queue is FIFO.
 //
 // Algorithms
 // -----------------------
@@ -41,21 +43,25 @@ public class Main {
         do {
             System.out.println("\nOperations\n");
             System.out.println("1. Work with a linked list.");
-            System.out.println("2. Work with a hash table.");
-            System.out.println("3. Work with mergesort.");
+            System.out.println("2. Work with a queue.");
+            System.out.println("3. Work with a hash table.");
+            System.out.println("4. Work with mergesort.");
 
             switch(scanner.nextInt()) {
                 case 1:
                     linkedLists();
                     break;
                 case 2:
-                    hashTables();
+                    queues();
                     break;
                 case 3:
+                    hashTables();
+                    break;
+                case 4:
                     mergeSort();
                     break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2 or 3.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3 or 4.");
                     break;
             }
 
@@ -78,6 +84,7 @@ public class Main {
             System.out.println("3. remove entry");
             System.out.println("4. get entry");
             System.out.println("5. number of entries");
+            System.out.println("6. clear");
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -109,13 +116,57 @@ public class Main {
                 case 5:
                     System.out.println("Number of entries = " + list.getSize());
                     break;
+                case 6:
+                    list.clear();
+                    System.out.println("List successfully cleared!");
+                    break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2, 3, 4 or 5.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5 or 6.");
                     break;
             }
 
             list.print();
             System.out.println("Do you want to continue using this linked list? (y or n)");
+            ch = scanner.next().charAt(0);
+
+        } while (ch == 'Y' || ch == 'y');
+    }
+
+    private static void queues() {
+
+        Queue queue = new Queue();
+
+        char ch;
+
+        do {
+            System.out.println("\nOperations\n");
+            System.out.println("1. inject");
+            System.out.println("2. eject");
+            System.out.println("3. number of entries");
+            System.out.println("4. clear");
+
+            switch(scanner.nextInt()) {
+                case 1:
+                    System.out.println("Enter entry value:");
+                    queue.inject(scanner.next());
+                    break;
+                case 2:
+                    System.out.println("Object returned: " + queue.eject());
+                    break;
+                case 3:
+                    System.out.println("Number of entries = " + queue.getSize());
+                    break;
+                case 4:
+                    queue.clear();
+                    System.out.println("Queue successfully cleared!");
+                    break;
+                default:
+                    System.out.println("Whoops, try again by typing 1, 2, 3 or 4.");
+                    break;
+            }
+
+            queue.print();
+            System.out.println("Do you want to continue using this queue? (y or n)");
             ch = scanner.next().charAt(0);
 
         } while (ch == 'Y' || ch == 'y');
