@@ -4,39 +4,49 @@ import java.util.List;
 
 public class MergeSorter {
 
-    // List<Integer> -> List<Integer>
-    // Given a list of integers return a list of the same integers sorted.
+    // int[] -> Object
+    // Given an array of integers return an array of the same integers sorted.
     // Strategy: Function Composition
-    public List<Integer> mergeSort(List<Integer> input) {
+    public Object mergeSort(int[] input) {
 
+        Queue queue = new Queue();
 
-        if(input.size() > 1) {
-            // Compute half the size of the input list rounded down.
-            int mid = input.size()/2;
-            return merge(input.subList(0, mid + 1), input.subList(mid + 1, input.size()));
-        } else {
-            return input;
+        for(int number : input) {
+            int[] entry = new int[] {number};
+            queue.inject(entry);
         }
+
+        while (queue.getSize() > 1) {
+            queue.inject(merge((int[])queue.eject(), (int[])queue.eject()));
+        }
+
+        return queue.eject();
     }
 
-    // List<Integer>, List<Integer> -> List<Integer>
-    // Given two list of integers merge them and return a single list.
+    // int[], int[] -> int[]
+    // Given two arrays of integers merge them and return a single array.
     // Strategy: Function Composition
-    private List<Integer> merge(List<Integer> x, List<Integer> y) {
+    private int[] merge(int[] x, int[] y) {
 
-        if(x.size() == 0) return y;
-        if(y.size() == 0) return x;
+        if(x.length == 0) return y;
+        if(y.length == 0) return x;
 
-        List<Integer> merged;
-
-        if(x.get(0) <= y.get(0)) {
-            merged = merge(x.subList(1, x.size()), y);
-            merged.add(0, x.get(0));
+        if(x[0] <= y[0]) {
+            int[] smallX = new int[x.length - 1];
+            System.arraycopy(x, 1, smallX, 0, x.length - 1);
+            int[] merged = merge(smallX, y);
+            int[] combo = new int[merged.length + 1];
+            combo[0] = x[0];
+            System.arraycopy(merged, 0, combo, 1, merged.length);
+            return combo;
         } else {
-            merged = merge(x, y.subList(1, y.size()));
-            merged.add(0, y.get(0));
+            int[] smallY = new int[y.length - 1];
+            System.arraycopy(y, 1, smallY, 0, y.length - 1);
+            int[] merged = merge(x, smallY);
+            int[] combo = new int[merged.length + 1];
+            combo[0] = y[0];
+            System.arraycopy(merged, 0, combo, 1, merged.length);
+            return combo;
         }
-
-        return merged;
     }
 }

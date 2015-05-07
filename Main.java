@@ -22,6 +22,9 @@
 //              sub-array must be compared, e.g. using a bottom-up approach we can determine a worst case input:
 //              [0, 1, 2, 3, 4, 5, 6, 7] -> [0, 2, 4, 6], [1, 3, 5, 7] -> [0, 4], [2, 6], [1, 5], [3, 7] ->
 //              [4, 0, 6, 2, 5, 1, 7, 3]
+//              This implementation of merge sort uses an iteration over the entries of a queue.  We start by adding
+//              singleton integer arrays to the queue, one for each input entry, then a merge function combines the
+//              arrays in a recursive manner in sorted order.
 
 
 package com.oliver;
@@ -282,7 +285,18 @@ public class Main {
 
         } while (ch == 'Y' || ch == 'y');
 
-        List<Integer> sortedList = sorter.mergeSort(listToSort);
-        System.out.println("Our sorted list: " + sortedList);
+        int[] sort = new int[listToSort.size()];
+
+        for (int i = 0; i < sort.length; i++) {
+            sort[i] = listToSort.get(i);
+        }
+
+        sort = (int[])sorter.mergeSort(sort);
+
+        System.out.print("Our sorted list: ");
+        for (int number : sort) {
+            System.out.print(" " + number + " ");
+        }
+        System.out.print("\n\n");
     }
 }
