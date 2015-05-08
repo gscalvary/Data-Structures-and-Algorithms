@@ -26,8 +26,14 @@
 //              [4, 0, 6, 2, 5, 1, 7, 3]
 //              This implementation of merge sort uses an iteration over the entries of a queue.  We start by adding
 //              singleton integer arrays to the queue, one for each input entry, then a merge function combines the
-//              arrays in a recursive manner in sorted order.
-
+//              arrays in a recursive manner in sorted order.  Merge sort is a stable sort and has a space complexity
+//              in common implementations of O(2n).
+// Quick Sort - The time complexity of quick sort is the same as that of merge sort but quick sort has a space
+//              complexity of O(n).  Quick sort is also a divide and conquer algorithm but does it's work by partition-
+//              ing the array to be sorted in two, choosing a pivot point in  each of the two arrays and moving elements
+//              with a value less than the pivot point to the left of the pivot point and elements with values greater
+//              than the pivot point to the right of it.  The swaps are done in place without the need for additional
+//              memory allocation.  Quick sort is not a stable sort.
 
 package com.oliver;
 
@@ -54,7 +60,8 @@ public class Main {
             System.out.println("3. Work with a stack.");
             System.out.println("4. Work with a hash table.");
             System.out.println("5. Work with a set.");
-            System.out.println("6. Work with mergesort.");
+            System.out.println("6. Work with a merge sort.");
+            System.out.println("7. Work with a quick sort.");
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -75,8 +82,11 @@ public class Main {
                 case 6:
                     mergeSort();
                     break;
+                case 7:
+                    quickSort();
+                    break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5 or 6.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6 or 7.");
                     break;
             }
 
@@ -344,6 +354,37 @@ public class Main {
         }
 
         sort = (int[])sorter.mergeSort(sort);
+
+        System.out.print("Our sorted list: ");
+        for (int number : sort) {
+            System.out.print(" " + number + " ");
+        }
+        System.out.print("\n\n");
+    }
+
+    private static void quickSort() {
+
+        QuickSorter sorter = new QuickSorter();
+        List<Integer> listToSort = new ArrayList<Integer>();
+
+        char ch;
+
+        do {
+            System.out.println("\nEnter an integer to add it to a list to sort.\n");
+            listToSort.add(scanner.nextInt());
+            System.out.println("So far we have: " + listToSort);
+            System.out.println("Do you want to continue entering integers? (y or n)");
+            ch = scanner.next().charAt(0);
+
+        } while (ch == 'Y' || ch == 'y');
+
+        int[] sort = new int[listToSort.size()];
+
+        for (int i = 0; i < sort.length; i++) {
+            sort[i] = listToSort.get(i);
+        }
+
+        sort = sorter.sort(sort, 0, sort.length - 1);
 
         System.out.print("Our sorted list: ");
         for (int number : sort) {

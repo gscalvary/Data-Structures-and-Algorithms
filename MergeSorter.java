@@ -1,12 +1,10 @@
 package com.oliver;
 
-import java.util.List;
-
 public class MergeSorter {
 
     // int[] -> Object
     // Given an array of integers return an array of the same integers sorted.
-    // Strategy: Function Composition
+    // Strategy: General Recursion
     public Object mergeSort(int[] input) {
 
         Queue queue = new Queue();
