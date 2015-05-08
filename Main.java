@@ -14,6 +14,8 @@
 //               while objects removed from the queue are taken from the front of the line, so a queue is FIFO.
 // Stack       - The stack is built upon the linked list.  Objects added to a stack are placed on top of the pile and
 //               objects removed from the stack are taken from the top of the pile, so a stack is LIFO.
+// Set         - The set is built upon arrays and is type agnostic.  It does not allow any object in the set to be a
+//               duplicate of any other object in the set.
 //
 // Algorithms
 // -----------------------
@@ -51,7 +53,8 @@ public class Main {
             System.out.println("2. Work with a queue.");
             System.out.println("3. Work with a stack.");
             System.out.println("4. Work with a hash table.");
-            System.out.println("5. Work with mergesort.");
+            System.out.println("5. Work with a set.");
+            System.out.println("6. Work with mergesort.");
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -67,10 +70,13 @@ public class Main {
                     hashTables();
                     break;
                 case 5:
+                    sets();
+                    break;
+                case 6:
                     mergeSort();
                     break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2, 3, 4 or 5.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5 or 6.");
                     break;
             }
 
@@ -264,6 +270,52 @@ public class Main {
 
             table.print();
             System.out.println("Do you want to continue using this hash table? (y or n)");
+            ch = scanner.next().charAt(0);
+
+        } while (ch == 'Y' || ch == 'y');
+    }
+
+    private static void sets() {
+
+        Set set = new Set();
+
+        char ch;
+
+        do {
+            System.out.println("\nOperations\n");
+            System.out.println("1. add");
+            System.out.println("2. remove");
+            System.out.println("3. contains");
+            System.out.println("4. clear");
+            System.out.println("5. number of entries");
+
+            switch(scanner.nextInt()) {
+                case 1:
+                    System.out.println("Enter value to store:");
+                    set.add(scanner.next());
+                    break;
+                case 2:
+                    System.out.println("Enter value to remove:");
+                    set.remove(scanner.next());
+                    break;
+                case 3:
+                    System.out.println("Enter value to check:");
+                    System.out.println("Is the value present: " + set.contains(scanner.next()));
+                    break;
+                case 4:
+                    set.clear();
+                    System.out.println("Clear complete!");
+                    break;
+                case 5:
+                    System.out.println("Number of entries = " + set.getNumEntries());
+                    break;
+                default:
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4 or 5.");
+                    break;
+            }
+
+            set.print();
+            System.out.println("Do you want to continue using this set? (y or n)");
             ch = scanner.next().charAt(0);
 
         } while (ch == 'Y' || ch == 'y');

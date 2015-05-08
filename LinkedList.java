@@ -122,7 +122,7 @@ public class LinkedList {
 
     // String -> void
     // Given a string representing how this linked list is being used, print the linked list.
-    // Strategy: Function Composition
+    // Strategy: Structural Decomposition
     public void print(String use) {
 
         LinkedListEntry entry = head;
