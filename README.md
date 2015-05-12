@@ -15,5 +15,6 @@ can be used as a foundation for later work:
  - Stack (the linked list may be used as the basis for your stack)
 - Set
 - Quick Sort
+- Tree
 
 Chris

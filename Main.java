@@ -16,6 +16,8 @@
 //               objects removed from the stack are taken from the top of the pile, so a stack is LIFO.
 // Set         - The set is built upon arrays and is type agnostic.  It does not allow any object in the set to be a
 //               duplicate of any other object in the set.
+// Tree        - A basic tree using a linked object implementation where each tree points to its parent and its
+//               children.
 //
 // Algorithms
 // -----------------------
@@ -60,8 +62,9 @@ public class Main {
             System.out.println("3. Work with a stack.");
             System.out.println("4. Work with a hash table.");
             System.out.println("5. Work with a set.");
-            System.out.println("6. Work with a merge sort.");
-            System.out.println("7. Work with a quick sort.");
+            System.out.println("6. Work with a tree.");
+            System.out.println("7. Work with a merge sort.");
+            System.out.println("8. Work with a quick sort.");
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -80,13 +83,16 @@ public class Main {
                     sets();
                     break;
                 case 6:
-                    mergeSort();
+                    trees();
                     break;
                 case 7:
+                    mergeSort();
+                    break;
+                case 8:
                     quickSort();
                     break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6 or 7.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7 or 8.");
                     break;
             }
 
@@ -329,6 +335,89 @@ public class Main {
             ch = scanner.next().charAt(0);
 
         } while (ch == 'Y' || ch == 'y');
+    }
+
+    private static void trees() {
+
+        Tree father = new Tree("Father");
+        Tree son = new Tree("Son");
+        Tree daughter = new Tree("Daughter");
+        Tree sonofson = new Tree("Son-of-Son");
+        Tree daughterofson = new Tree("Daughter-of-Son");
+        Tree sonofdaughter = new Tree("Son-of-Daughter");
+        Tree daughterofdaughter = new Tree("Daughter-of-Daughter");
+
+        Tree[] secondGen = new Tree[]{son, daughter};
+        Tree[] sonThirdGen = new Tree[]{sonofson, daughterofson};
+        Tree[] daughterThirdGen = new Tree[]{sonofdaughter, daughterofdaughter};
+
+        father.setChildren(secondGen);
+        son.setChildren(sonThirdGen);
+        son.setParent(father);
+        daughter.setChildren(daughterThirdGen);
+        daughter.setParent(father);
+        sonofson.setParent(son);
+        daughterofson.setParent(son);
+        sonofdaughter.setParent(daughter);
+        daughterofdaughter.setParent(daughter);
+
+        char ch;
+
+        do {
+            System.out.println("\nOperations\n");
+            System.out.println("1. print pre-order");
+            System.out.println("2. print post-order");
+
+            switch(scanner.nextInt()) {
+                case 1:
+                    printTreePreOrder(father);
+                    break;
+                case 2:
+                    printTreePostOrder(father);
+                    break;
+                default:
+                    System.out.println("Whoops, try again by typing 1 or 2.");
+                    break;
+            }
+
+            System.out.println("\nDo you want to continue using this tree? (y or n)");
+            ch = scanner.next().charAt(0);
+
+        } while (ch == 'Y' || ch == 'y');
+    }
+
+    // Tree -> void
+    // Given a tree print it in pre-order.
+    // Strategy: Function Composition
+    private static void printTreePreOrder(Tree tree) {
+
+        if(tree == null) return;
+
+        System.out.print(tree.getData() + " ");
+
+        Tree[] children = tree.getChildren();
+        if(children != null) {
+            for (Tree child : children) {
+                printTreePreOrder(child);
+            }
+        }
+    }
+
+    // Tree -> void
+    // Given a tree print it in post-order.
+    // Strategy: Function Composition
+    private static void printTreePostOrder(Tree tree) {
+
+        if(tree == null) return;
+
+        Tree[] children = tree.getChildren();
+        if(children != null) {
+            for (Tree child : children) {
+                printTreePostOrder(child);
+            }
+        }
+
+        System.out.print(tree.getData() + " ");
     }
 
     private static void mergeSort() {
