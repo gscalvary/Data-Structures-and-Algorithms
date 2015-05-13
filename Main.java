@@ -18,6 +18,12 @@
 //               duplicate of any other object in the set.
 // Tree        - A basic tree using a linked object implementation where each tree points to its parent and its
 //               children.
+// Graph       - Implemented using an adjacency matrix of n x n size where n is the number of vertices in the graph.
+//               The intersection of two vertices is stored as a boolean.  The boolean is true if there is an edge
+//               between the vertices.  This supports both undirected and directed graphs.  Adding, removing and
+//               returning if an edge exists all take O(1) time.  Determining all of the out and in edges takes O(n)
+//               time as all of the entries in the vertexes row or column must be scanned.  The space complexity of the
+//               adjacency matrix approach is O(n^2).
 //
 // Algorithms
 // -----------------------
@@ -63,8 +69,9 @@ public class Main {
             System.out.println("4. Work with a hash table.");
             System.out.println("5. Work with a set.");
             System.out.println("6. Work with a tree.");
-            System.out.println("7. Work with a merge sort.");
-            System.out.println("8. Work with a quick sort.");
+            System.out.println("7. Work with a graph.");
+            System.out.println("8. Work with a merge sort.");
+            System.out.println("9. Work with a quick sort.");
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -86,13 +93,16 @@ public class Main {
                     trees();
                     break;
                 case 7:
-                    mergeSort();
+                    graphs();
                     break;
                 case 8:
+                    mergeSort();
+                    break;
+                case 9:
                     quickSort();
                     break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7 or 8.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8 or 9.");
                     break;
             }
 
@@ -418,6 +428,140 @@ public class Main {
         }
 
         System.out.print(tree.getData() + " ");
+    }
+
+    private static void graphs() {
+
+        Graph southAmerica = new Graph(13);
+        String[] countries = new String[]{"Brazil", "French Guinea", "Suriname", "Guyana", "Venezuela", "Colombia",
+        "Peru", "Ecuador", "Bolivia", "Paraguay", "Argentina", "Uruguay", "Chile"};
+
+        System.out.println("\nYou'll be working with a graph representation of South America where:\n");
+        for(int i = 0; i < 13; i++) {
+            System.out.println(i + ": " + countries[i]);
+        }
+
+        southAmerica.addEdge(0, 1);
+        southAmerica.addEdge(1, 0);
+        southAmerica.addEdge(0, 2);
+        southAmerica.addEdge(2, 0);
+        southAmerica.addEdge(0, 3);
+        southAmerica.addEdge(3, 0);
+        southAmerica.addEdge(0, 4);
+        southAmerica.addEdge(4, 0);
+        southAmerica.addEdge(0, 5);
+        southAmerica.addEdge(5, 0);
+        southAmerica.addEdge(0, 6);
+        southAmerica.addEdge(6, 0);
+        southAmerica.addEdge(0, 8);
+        southAmerica.addEdge(8, 0);
+        southAmerica.addEdge(0, 9);
+        southAmerica.addEdge(9, 0);
+        southAmerica.addEdge(0, 10);
+        southAmerica.addEdge(10, 0);
+        southAmerica.addEdge(0, 11);
+        southAmerica.addEdge(11, 0);
+        southAmerica.addEdge(1, 2);
+        southAmerica.addEdge(2, 1);
+        southAmerica.addEdge(2, 3);
+        southAmerica.addEdge(3, 2);
+        southAmerica.addEdge(3, 4);
+        southAmerica.addEdge(4, 3);
+        southAmerica.addEdge(4, 5);
+        southAmerica.addEdge(5, 4);
+        southAmerica.addEdge(5, 6);
+        southAmerica.addEdge(6, 5);
+        southAmerica.addEdge(5, 7);
+        southAmerica.addEdge(7, 5);
+        southAmerica.addEdge(6, 7);
+        southAmerica.addEdge(7, 6);
+        southAmerica.addEdge(6, 8);
+        southAmerica.addEdge(8, 6);
+        southAmerica.addEdge(8, 9);
+        southAmerica.addEdge(9, 8);
+        southAmerica.addEdge(6, 12);
+        southAmerica.addEdge(12, 6);
+        southAmerica.addEdge(12, 8);
+        southAmerica.addEdge(8, 12);
+        southAmerica.addEdge(8, 10);
+        southAmerica.addEdge(10, 8);
+        southAmerica.addEdge(9, 10);
+        southAmerica.addEdge(10, 9);
+        southAmerica.addEdge(10, 12);
+        southAmerica.addEdge(12, 10);
+        southAmerica.addEdge(10, 11);
+        southAmerica.addEdge(11, 10);
+
+        char ch;
+
+        do {
+            System.out.println("\nOperations\n");
+            System.out.println("1. Add an edge");
+            System.out.println("2. Remove and edge");
+            System.out.println("3. Check if an edge exists");
+            System.out.println("4. List out edges");
+            System.out.println("5. List in edges");
+
+            switch(scanner.nextInt()) {
+                case 1:
+                    System.out.println("\nEnter an integer for the from vertex.\n");
+                    int i = scanner.nextInt();
+                    System.out.println("\nEnter an integer for the to vertex.\n");
+                    int j = scanner.nextInt();
+                    southAmerica.addEdge(i, j);
+                    System.out.println("Edge between " + countries[i] + " and " + countries[j] + " added.");
+                    break;
+                case 2:
+                    System.out.println("\nEnter an integer for the from vertex.\n");
+                    int k = scanner.nextInt();
+                    System.out.println("\nEnter an integer for the to vertex.\n");
+                    int l = scanner.nextInt();
+                    southAmerica.removeEdge(k, l);
+                    System.out.println("Edge between " + countries[k] + " and " + countries[l] + " removed.");
+                    break;
+                case 3:
+                    System.out.println("\nEnter an integer for the from vertex.\n");
+                    int m = scanner.nextInt();
+                    System.out.println("\nEnter an integer for the to vertex.\n");
+                    int n = scanner.nextInt();
+                    System.out.println("Is there an edge between " + countries[m] + " and " + countries[n] + ": " +
+                            southAmerica.hasEdge(m, n));
+                    break;
+                case 4:
+                    System.out.println("\nEnter an integer for the vertex being examined.\n");
+                    int o = scanner.nextInt();
+                    List<Integer> edgesOut = southAmerica.outEdges(o);
+                    if(edgesOut != null) {
+                        System.out.println("Edges:");
+                        for (Integer index : edgesOut) {
+                            System.out.println(countries[o] + " to " + countries[index]);
+                        }
+                    } else {
+                        System.out.println("There are no edges.");
+                    }
+                    break;
+                case 5:
+                    System.out.println("\nEnter an integer for the vertex being examined.\n");
+                    int p = scanner.nextInt();
+                    List<Integer> edgesIn = southAmerica.inEdges(p);
+                    if(edgesIn != null) {
+                        System.out.println("Edges:");
+                        for (Integer index : edgesIn) {
+                            System.out.println(countries[p] + " from " + countries[index]);
+                        }
+                    } else {
+                        System.out.println("There are no edges.");
+                    }
+                    break;
+                default:
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4 or 5.");
+                    break;
+            }
+
+            System.out.println("\nDo you want to continue using this graph? (y or n)");
+            ch = scanner.next().charAt(0);
+
+        } while (ch == 'Y' || ch == 'y');
     }
 
     private static void mergeSort() {

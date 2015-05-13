@@ -16,5 +16,6 @@ can be used as a foundation for later work:
 - Set
 - Quick Sort
 - Tree
+- Graph
 
 Chris
