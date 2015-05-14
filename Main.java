@@ -655,7 +655,7 @@ public class Main {
         world.addEdge(3, 4);
         world.addEdge(4, 3);
 
-        DFSExplorer dfs = new DFSExplorer(world);
+        DepthExplorer dfs = new DepthExplorer(world);
 
         char ch;
 
