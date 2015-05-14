@@ -17,5 +17,6 @@ can be used as a foundation for later work:
 - Quick Sort
 - Tree
 - Graph
+ - Depth First Search (takes a graph as input!)
 
 Chris

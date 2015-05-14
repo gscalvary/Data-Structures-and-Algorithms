@@ -42,6 +42,8 @@
 //              with a value less than the pivot point to the left of the pivot point and elements with values greater
 //              than the pivot point to the right of it.  The swaps are done in place without the need for additional
 //              memory allocation.  Quick sort is not a stable sort.
+// Depth First Search - Linear in the size of its input the time complexity of DFS is O(|V| + |E|).  This implementation
+//              identifies connected components and tracks pre- and post- visit ordering.
 
 package com.oliver;
 
@@ -72,6 +74,7 @@ public class Main {
             System.out.println("7. Work with a graph.");
             System.out.println("8. Work with a merge sort.");
             System.out.println("9. Work with a quick sort.");
+            System.out.println("10. Work with depth first search.");
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -101,8 +104,11 @@ public class Main {
                 case 9:
                     quickSort();
                     break;
+                case 10:
+                    dfs();
+                    break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8 or 9.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8, 9 or 10.");
                     break;
             }
 
@@ -432,12 +438,14 @@ public class Main {
 
     private static void graphs() {
 
-        Graph southAmerica = new Graph(13);
+        int size = 13;
+
+        Graph southAmerica = new Graph(size);
         String[] countries = new String[]{"Brazil", "French Guinea", "Suriname", "Guyana", "Venezuela", "Colombia",
         "Peru", "Ecuador", "Bolivia", "Paraguay", "Argentina", "Uruguay", "Chile"};
 
         System.out.println("\nYou'll be working with a graph representation of South America where:\n");
-        for(int i = 0; i < 13; i++) {
+        for(int i = 0; i < size; i++) {
             System.out.println(i + ": " + countries[i]);
         }
 
@@ -624,5 +632,53 @@ public class Main {
             System.out.print(" " + number + " ");
         }
         System.out.print("\n\n");
+    }
+
+    private static void dfs() {
+
+        int size = 7;
+
+        Graph world = new Graph(size);
+        String[] continents = new String[]{"North America", "South America", "Europe", "Asia", "Africa", "Australia",
+                "Antartica"};
+
+        System.out.println("\nYou'll be working with an undirected graph representation of the world's continents " +
+                "where:\n");
+        for(int i = 0; i < size; i++) {
+            System.out.println(i + ": " + continents[i]);
+        }
+
+        world.addEdge(0, 1);
+        world.addEdge(1, 0);
+        world.addEdge(2, 3);
+        world.addEdge(3, 2);
+        world.addEdge(3, 4);
+        world.addEdge(4, 3);
+
+        DFSExplorer dfs = new DFSExplorer(world);
+
+        char ch;
+
+        do {
+            System.out.println("\nEnter an integer representing the continent in which you are interested:\n");
+
+            int n = scanner.nextInt();
+            dfs.dfs();
+            int ccnum[] = dfs.getCcnum();
+            int pre[] = dfs.getPre();
+            int post[] = dfs.getPost();
+            int ourComponent = ccnum[n];
+
+            System.out.println("\nContinents reached: \n");
+
+            for (int i = 0; i < ccnum.length; i++) {
+                if(ccnum[i] == ourComponent) System.out.print(continents[i] + ", pre order " + pre[i] + ", post order "
+                        + post[i] + "\n");
+            }
+
+            System.out.println("\nDo you want to continue exploring dfs? (y or n)");
+            ch = scanner.next().charAt(0);
+
+        } while (ch == 'Y' || ch == 'y');
     }
 }

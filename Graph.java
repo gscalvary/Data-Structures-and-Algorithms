@@ -71,4 +71,12 @@ public class Graph {
 
         return edges;
     }
+
+    //  -> int
+    // Return the number of vertices in the graph.
+    // Strategy: Domain Knowledge
+    public int getNumVertices() {
+
+        return n;
+    }
 }
