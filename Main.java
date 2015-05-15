@@ -12,6 +12,9 @@
 // Linked List - I implemented a linked list with specific functionality to support queues and stacks.
 // Queue       - The queue is built upon the linked list.  Objects added to a queue are placed at the end of the line
 //               while objects removed from the queue are taken from the front of the line, so a queue is FIFO.
+// Priority Queue - The priority queue is built upon the linked list.  In this implementation an insert is of O(1)
+//               time complexity as the linked list is unordered so new entries are simply added as a tail.  Decreasing
+//               a key and deleting a minimum are of linear time complexity O(n) where n is the size of the queue.
 // Stack       - The stack is built upon the linked list.  Objects added to a stack are placed on top of the pile and
 //               objects removed from the stack are taken from the top of the pile, so a stack is LIFO.
 // Set         - The set is built upon arrays and is type agnostic.  It does not allow any object in the set to be a
@@ -70,15 +73,16 @@ public class Main {
             System.out.println("\nOperations\n");
             System.out.println("1. Work with a linked list.");
             System.out.println("2. Work with a queue.");
-            System.out.println("3. Work with a stack.");
-            System.out.println("4. Work with a hash table.");
-            System.out.println("5. Work with a set.");
-            System.out.println("6. Work with a tree.");
-            System.out.println("7. Work with a graph.");
-            System.out.println("8. Work with a merge sort.");
-            System.out.println("9. Work with a quick sort.");
-            System.out.println("10. Work with depth first search.");
-            System.out.println("11. Work with breadth first search.");
+            System.out.println("3. Work with a priority queue.");
+            System.out.println("4. Work with a stack.");
+            System.out.println("5. Work with a hash table.");
+            System.out.println("6. Work with a set.");
+            System.out.println("7. Work with a tree.");
+            System.out.println("8. Work with a graph.");
+            System.out.println("9. Work with a merge sort.");
+            System.out.println("10. Work with a quick sort.");
+            System.out.println("11. Work with depth first search.");
+            System.out.println("12. Work with breadth first search.");
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -88,34 +92,37 @@ public class Main {
                     queues();
                     break;
                 case 3:
-                    stacks();
+                    priorityQueues();
                     break;
                 case 4:
-                    hashTables();
+                    stacks();
                     break;
                 case 5:
-                    sets();
+                    hashTables();
                     break;
                 case 6:
-                    trees();
+                    sets();
                     break;
                 case 7:
-                    graphs();
+                    trees();
                     break;
                 case 8:
-                    mergeSort();
+                    graphs();
                     break;
                 case 9:
-                    quickSort();
+                    mergeSort();
                     break;
                 case 10:
-                    dfs();
+                    quickSort();
                     break;
                 case 11:
+                    dfs();
+                    break;
+                case 12:
                     bfs();
                     break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 or 11.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 or 12.");
                     break;
             }
 
@@ -221,6 +228,57 @@ public class Main {
 
             queue.print();
             System.out.println("Do you want to continue using this queue? (y or n)");
+            ch = scanner.next().charAt(0);
+
+        } while (ch == 'Y' || ch == 'y');
+    }
+
+    private static void priorityQueues() {
+
+        PriorityQueue queue = new PriorityQueue();
+
+        char ch;
+
+        do {
+            System.out.println("\nOperations\n");
+            System.out.println("1. inject");
+            System.out.println("2. eject");
+            System.out.println("3. number of entries");
+            System.out.println("4. clear");
+            System.out.println("5. update entry");
+
+            switch(scanner.nextInt()) {
+                case 1:
+                    System.out.println("Enter entry value:");
+                    Object data = scanner.next();
+                    System.out.println("Enter entry integer key:");
+                    Object key = scanner.nextInt();
+                    queue.inject(data, key);
+                    break;
+                case 2:
+                    System.out.println("Object returned: " + queue.eject() + "\n");
+                    break;
+                case 3:
+                    System.out.println("Number of entries = " + queue.getSize());
+                    break;
+                case 4:
+                    queue.clear();
+                    System.out.println("Queue successfully cleared!");
+                    break;
+                case 5:
+                    System.out.println("Enter entry value:");
+                    data = scanner.next();
+                    System.out.println("Enter entry integer key:");
+                    key = scanner.nextInt();
+                    queue.updateKey(data, key);
+                    break;
+                default:
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4 or 5.");
+                    break;
+            }
+
+            queue.print();
+            System.out.println("Do you want to continue using this priority queue? (y or n)");
             ch = scanner.next().charAt(0);
 
         } while (ch == 'Y' || ch == 'y');
