@@ -6,12 +6,12 @@ import java.util.List;
 public class Graph {
 
     int n;
-    boolean[][] a;
+    Edge[][] edges;
 
     public Graph(int n) {
 
         this.n = n;
-        a = new boolean[n][n];
+        edges = new Edge[n][n];
     }
 
     // int, int -> void
@@ -19,7 +19,15 @@ public class Graph {
     // Strategy: Domain Knowledge
     public void addEdge(int i, int j) {
 
-        if(i >= 0 && i < n && j >= 0 && j < n) a[i][j] = true;
+        if(i >= 0 && i < n && j >= 0 && j < n) edges[i][j] = new Edge();
+    }
+
+    // int, int, int -> void
+    // EFFECT: Given a source vertex, a destination vertex and a length add an edge between them.
+    // Strategy: Domain Knowledge
+    public void addEdge(int i, int j, int length) {
+
+        if(i >= 0 && i < n && j >= 0 && j < n) edges[i][j] = new Edge(length);
     }
 
     // int, int -> void
@@ -27,7 +35,7 @@ public class Graph {
     // Strategy: Domain Knowledge
     public void removeEdge(int i, int j) {
 
-        if(i >= 0 && i < n && j >= 0 && j < n) a[i][j] = false;
+        if(i >= 0 && i < n && j >= 0 && j < n) edges[i][j] = null;
     }
 
     // int, int -> boolean
@@ -37,7 +45,7 @@ public class Graph {
 
         // This returns false if either i or j values are outside of the range 0 to n inclusive, if they are within
         // range it in effect returns the hasEdge boolean.
-        return (i >= 0 && i < n && j >= 0 && j < n) && a[i][j];
+        return (i >= 0 && i < n && j >= 0 && j < n) && (edges[i][j] != null);
     }
 
     // int -> List<Integer>
@@ -47,13 +55,13 @@ public class Graph {
 
         if(i < 0 || i >= n) return null;
 
-        List<Integer> edges = new ArrayList<Integer>();
+        List<Integer> vertices = new ArrayList<Integer>();
 
         for (int j = 0; j < n; j++) {
-            if(a[i][j]) edges.add(j);
+            if(edges[i][j] != null) vertices.add(j);
         }
 
-        return edges;
+        return vertices;
     }
 
     // int -> List<Integer>
@@ -63,13 +71,13 @@ public class Graph {
 
         if(i < 0 || i >= n) return null;
 
-        List<Integer> edges = new ArrayList<Integer>();
+        List<Integer> vertices = new ArrayList<Integer>();
 
         for (int j = 0; j < n; j++) {
-            if(a[j][i]) edges.add(j);
+            if(edges[j][i] != null) vertices.add(j);
         }
 
-        return edges;
+        return vertices;
     }
 
     //  -> int
