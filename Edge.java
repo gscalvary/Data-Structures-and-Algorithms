@@ -11,7 +11,7 @@ public class Edge {
 
     public Edge() {
 
-        length = 0;
+        length = 1;
     }
 
     //  -> int

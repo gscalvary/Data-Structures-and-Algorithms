@@ -38,6 +38,18 @@ public class Graph {
         if(i >= 0 && i < n && j >= 0 && j < n) edges[i][j] = null;
     }
 
+    // int, int -> Edge
+    // Given a source vertex and a destination vertex return the edge between them.
+    // Strategy: Domain Knowledge
+    public Edge getEdge(int i, int j) {
+
+        if(i >= 0 && i < n && j >= 0 && j < n) {
+            return edges[i][j];
+        } else {
+            return null;
+        }
+    }
+
     // int, int -> boolean
     // Given a source vertex and a destination vertex indicate whether there is an edge between them.
     // Strategy: Domain Knowledge

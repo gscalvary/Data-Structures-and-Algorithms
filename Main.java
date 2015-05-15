@@ -44,6 +44,9 @@
 //              memory allocation.  Quick sort is not a stable sort.
 // Depth First Search - Linear in the size of its input the time complexity of DFS is O(|V| + |E|).  This implementation
 //              identifies connected components and tracks pre- and post- visit ordering.
+// Breadth First Search - Linear in the size of its input the time complexity of BFS is O(|V| + |E|).  This
+//              implementation takes a vertex as input and sets the distance between it and all other reachable vertices
+//              in the graph.
 
 package com.oliver;
 
@@ -75,6 +78,7 @@ public class Main {
             System.out.println("8. Work with a merge sort.");
             System.out.println("9. Work with a quick sort.");
             System.out.println("10. Work with depth first search.");
+            System.out.println("11. Work with breadth first search.");
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -107,8 +111,11 @@ public class Main {
                 case 10:
                     dfs();
                     break;
+                case 11:
+                    bfs();
+                    break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8, 9 or 10.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 or 11.");
                     break;
             }
 
@@ -677,6 +684,68 @@ public class Main {
             }
 
             System.out.println("\nDo you want to continue exploring dfs? (y or n)");
+            ch = scanner.next().charAt(0);
+
+        } while (ch == 'Y' || ch == 'y');
+    }
+
+    private static void bfs() {
+
+        int size = 7;
+
+        Graph theWest = new Graph(size);
+        String[] cities = new String[]{"San Francisco", "Sacramento", "Reno", "Bakersfield", "Los Angeles",
+                "Los Vegas", "Catalina Island"};
+
+        System.out.println("\nYou'll be working with an undirected graph representation of some locations in the " +
+                "western US where:\n");
+        for(int i = 0; i < size; i++) {
+            System.out.println(i + ": " + cities[i]);
+        }
+
+        theWest.addEdge(0, 1, 95);
+        theWest.addEdge(1, 0, 95);
+        theWest.addEdge(0, 3, 290);
+        theWest.addEdge(3, 0, 290);
+        theWest.addEdge(0, 4, 409);
+        theWest.addEdge(4, 0, 409);
+        theWest.addEdge(1, 3, 271);
+        theWest.addEdge(3, 1, 271);
+        theWest.addEdge(1, 2, 133);
+        theWest.addEdge(2, 1, 133);
+        theWest.addEdge(2, 5, 445);
+        theWest.addEdge(5, 2, 445);
+        theWest.addEdge(3, 4, 112);
+        theWest.addEdge(4, 3, 112);
+        theWest.addEdge(3, 5, 291);
+        theWest.addEdge(5, 3, 291);
+        theWest.addEdge(4, 5, 275);
+        theWest.addEdge(5, 4, 275);
+
+        System.out.println("\nA breadth first search will tell you the distance between these locations by car.\n");
+
+        BreadthExplorer bfs = new BreadthExplorer(theWest);
+
+        char ch;
+
+        do {
+            System.out.println("\nEnter an integer representing the location from which you are traveling:\n");
+
+            int n = scanner.nextInt();
+            bfs.bfs(n);
+            Integer dist[] = bfs.getDist();
+
+            System.out.println("\nDistances from " + cities[n] + " to all other cities: \n");
+
+            for (int i = 0; i < dist.length; i++) {
+                if(dist[i] == Integer.MAX_VALUE) {
+                    System.out.print(cities[i] + " is unreachable.\n");
+                } else {
+                    System.out.print(cities[i] + " : " + dist[i] + "\n");
+                }
+            }
+
+            System.out.println("\nDo you want to continue exploring bfs? (y or n)");
             ch = scanner.next().charAt(0);
 
         } while (ch == 'Y' || ch == 'y');
