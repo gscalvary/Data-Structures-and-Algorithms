@@ -50,6 +50,9 @@
 // Breadth First Search - Linear in the size of its input the time complexity of BFS is O(|V| + |E|).  This
 //              implementation takes a vertex as input and sets the distance between it and all other reachable vertices
 //              in the graph.
+// Dijkstra   - Calculates the shortest path through a graph whose edges are annotated with a length greater than or
+//              equal to 0.  The running time is dependant upon the priority queue implementation.  If a binary heap is
+//              used the running time is O((|V| + |E|)log |V|).
 
 package com.oliver;
 
@@ -83,6 +86,7 @@ public class Main {
             System.out.println("10. Work with a quick sort.");
             System.out.println("11. Work with depth first search.");
             System.out.println("12. Work with breadth first search.");
+            System.out.println("13. Work with Dijkstra shortest path.");
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -121,8 +125,11 @@ public class Main {
                 case 12:
                     bfs();
                     break;
+                case 13:
+                    dijkstra();
+                    break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 or 12.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 or 13.");
                     break;
             }
 
@@ -804,6 +811,59 @@ public class Main {
             }
 
             System.out.println("\nDo you want to continue exploring bfs? (y or n)");
+            ch = scanner.next().charAt(0);
+
+        } while (ch == 'Y' || ch == 'y');
+    }
+
+    private static void dijkstra() {
+
+        int size = 5;
+
+        Graph graph = new Graph(size);
+        String[] nodes = new String[]{"A", "B", "C", "D", "E"};
+
+        System.out.println("\nYou'll be working with a directed graph with five nodes where:\n");
+        for(int i = 0; i < size; i++) {
+            System.out.println(i + ": " + nodes[i]);
+        }
+
+        graph.addEdge(0, 1, 4);
+        graph.addEdge(0, 2, 2);
+        graph.addEdge(1, 2, 3);
+        graph.addEdge(1, 3, 2);
+        graph.addEdge(1, 4, 3);
+        graph.addEdge(2, 1, 1);
+        graph.addEdge(2, 3, 4);
+        graph.addEdge(2, 4, 5);
+        graph.addEdge(4, 3, 1);
+
+        char ch;
+        DijkstraExplorer de = new DijkstraExplorer();
+
+        do {
+            System.out.println("\nEnter an integer representing the source node:\n");
+
+            int n = scanner.nextInt();
+            int dist[] = de.getDist(graph, n);
+            int prev[] = de.getPrev(graph, n);
+
+            System.out.println("\nDistances from " + nodes[n] + " to all other nodes: \n");
+            for (int i = 0; i < dist.length; i++) {
+                if(dist[i] == Integer.MAX_VALUE) {
+                    System.out.print(nodes[i] + " is unreachable from " + nodes[n] + "\n");
+                } else {
+                    System.out.print(nodes[i] + " : " + dist[i] + "\n");
+                }
+            }
+
+            for (int i = 0; i < prev.length; i++) {
+                if(prev[i] != -1) {
+                    System.out.print(nodes[i] + " is reachable through " + nodes[prev[i]] + "\n");
+                }
+            }
+
+            System.out.println("\nDo you want to continue exploring Dijkstra searches? (y or n)");
             ch = scanner.next().charAt(0);
 
         } while (ch == 'Y' || ch == 'y');
