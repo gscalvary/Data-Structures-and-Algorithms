@@ -53,6 +53,10 @@
 // Dijkstra   - Calculates the shortest path through a graph whose edges are annotated with a length greater than or
 //              equal to 0.  The running time is dependant upon the priority queue implementation.  If a binary heap is
 //              used the running time is O((|V| + |E|)log |V|).
+// Bellman-Ford - Calculates the shortest path through a graph whose edges are annotated with a length but that does not
+//              have a negative cycle.  The algorithm iterates |V| - 1 times over all the edges in the graph calculating
+//              the distance from some given source node to each vertex during each iteration.  The run time for the
+//              algorithm is O(|V|*|E|).
 
 package com.oliver;
 
@@ -87,6 +91,7 @@ public class Main {
             System.out.println("11. Work with depth first search.");
             System.out.println("12. Work with breadth first search.");
             System.out.println("13. Work with Dijkstra shortest path.");
+            System.out.println("14. Work with Bellman-Ford shortest path.");
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -128,8 +133,11 @@ public class Main {
                 case 13:
                     dijkstra();
                     break;
+                case 14:
+                    bellmanFord();
+                    break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 or 13.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 or 14.");
                     break;
             }
 
@@ -868,6 +876,65 @@ public class Main {
             }
 
             System.out.println("\nDo you want to continue exploring Dijkstra searches? (y or n)");
+            ch = scanner.next().charAt(0);
+
+        } while (ch == 'Y' || ch == 'y');
+    }
+
+    private static void bellmanFord() {
+
+        int size = 8;
+
+        Graph graph = new Graph(size);
+        String[] nodes = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
+
+        System.out.println("\nYou'll be working with a directed graph with eight nodes where:\n");
+        for(int i = 0; i < size; i++) {
+            System.out.println(i + ": " + nodes[i]);
+        }
+
+        graph.addEdge(0, 4, 2);
+        graph.addEdge(1, 0, 1);
+        graph.addEdge(1, 2, 1);
+        graph.addEdge(2, 3, 3);
+        graph.addEdge(3, 4, -1);
+        graph.addEdge(4, 1, -2);
+        graph.addEdge(5, 0, -4);
+        graph.addEdge(5, 4, -1);
+        graph.addEdge(6, 5, 1);
+        graph.addEdge(7, 6, 8);
+        graph.addEdge(7, 0, 10);
+
+        char ch;
+        BellmanFordExplorer bfe = new BellmanFordExplorer();
+
+        do {
+            System.out.println("\nEnter an integer representing the source node:\n");
+
+            int n = scanner.nextInt();
+            if(n < 0 || n >= size) {
+                System.out.println("That's not a valid node!");
+            } else {
+                int dist[] = bfe.getDist(graph, n);
+                int prev[] = bfe.getPrev(graph, n);
+
+                System.out.println("\nDistances from " + nodes[n] + " to all other nodes: \n");
+                for (int i = 0; i < dist.length; i++) {
+                    if(dist[i] == Integer.MAX_VALUE) {
+                        System.out.print(nodes[i] + " is unreachable from " + nodes[n] + "\n");
+                    } else {
+                        System.out.print(nodes[i] + " : " + dist[i] + "\n");
+                    }
+                }
+
+                for (int i = 0; i < prev.length; i++) {
+                    if(prev[i] != -1) {
+                        System.out.print(nodes[i] + " is reachable through " + nodes[prev[i]] + "\n");
+                    }
+                }
+            }
+
+            System.out.println("\nDo you want to continue exploring Bellman-Ford searches? (y or n)");
             ch = scanner.next().charAt(0);
 
         } while (ch == 'Y' || ch == 'y');
