@@ -50,6 +50,7 @@ public class DijkstraExplorer {
         for(int i = 0; i < size; i++) {
             H.inject(i, dist[i]);
         }
+        H.print();
 
         // Calculate the shortest distances.
         while(H.getSize() != 0) {
@@ -57,10 +58,18 @@ public class DijkstraExplorer {
             Integer u = (Integer)H.eject();
             // Look at all the edges leading from u.
             for(Integer v : g.outEdges(u)) {
-                if(dist[v] > dist[u] + g.getEdge(u, v).getLength()) {
-                    dist[v] = dist[u] + g.getEdge(u, v).getLength();
+                // Adding a value to Integer.MAX_VALUE yields a negative number hence the below check.
+                int newDistance;
+                if(dist[u] == Integer.MAX_VALUE) {
+                    newDistance = Integer.MAX_VALUE;
+                } else {
+                    newDistance = dist[u] + g.getEdge(u, v).getLength();
+                }
+                if(dist[v] > newDistance) {
+                    dist[v] = newDistance;
                     prev[v] = u;
                     H.updateKey(v, dist[v]);
+                    H.print();
                 }
             }
         }

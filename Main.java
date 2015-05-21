@@ -845,21 +845,25 @@ public class Main {
             System.out.println("\nEnter an integer representing the source node:\n");
 
             int n = scanner.nextInt();
-            int dist[] = de.getDist(graph, n);
-            int prev[] = de.getPrev(graph, n);
+            if(n < 0 || n >= size) {
+                System.out.println("That's not a valid node!");
+            } else {
+                int dist[] = de.getDist(graph, n);
+                int prev[] = de.getPrev(graph, n);
 
-            System.out.println("\nDistances from " + nodes[n] + " to all other nodes: \n");
-            for (int i = 0; i < dist.length; i++) {
-                if(dist[i] == Integer.MAX_VALUE) {
-                    System.out.print(nodes[i] + " is unreachable from " + nodes[n] + "\n");
-                } else {
-                    System.out.print(nodes[i] + " : " + dist[i] + "\n");
+                System.out.println("\nDistances from " + nodes[n] + " to all other nodes: \n");
+                for (int i = 0; i < dist.length; i++) {
+                    if(dist[i] == Integer.MAX_VALUE) {
+                        System.out.print(nodes[i] + " is unreachable from " + nodes[n] + "\n");
+                    } else {
+                        System.out.print(nodes[i] + " : " + dist[i] + "\n");
+                    }
                 }
-            }
 
-            for (int i = 0; i < prev.length; i++) {
-                if(prev[i] != -1) {
-                    System.out.print(nodes[i] + " is reachable through " + nodes[prev[i]] + "\n");
+                for (int i = 0; i < prev.length; i++) {
+                    if(prev[i] != -1) {
+                        System.out.print(nodes[i] + " is reachable through " + nodes[prev[i]] + "\n");
+                    }
                 }
             }
 
