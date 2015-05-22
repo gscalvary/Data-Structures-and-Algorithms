@@ -21,6 +21,7 @@ can be used as a foundation for later work:
  - Depth First Search (takes a graph as input!)                                                                        
  - Breadth First Search (takes a graph as input and uses a queue for ordering!)
  - Dijkstra Shortest Path (takes a graph as input but also needs the Priority Queue)
+  - A star as it uses Dijkstra as a base
  - Bellman-Ford Shortest Path (takes a graph as input, can be constructed using most of the Dijkstra code)
 
 Chris

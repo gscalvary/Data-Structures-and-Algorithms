@@ -7,11 +7,24 @@ public class Graph {
 
     int n;
     Edge[][] edges;
+    int[] heuristic;
 
     public Graph(int n) {
 
         this.n = n;
         edges = new Edge[n][n];
+        heuristic = new int[n];
+
+        for(int i = 0; i < n; i++) {
+            heuristic[i] = 0;
+        }
+    }
+
+    public Graph(int n, int[] heuristic) {
+
+        this.n = n;
+        edges = new Edge[n][n];
+        this.heuristic = heuristic;
     }
 
     // int, int -> void
@@ -98,5 +111,27 @@ public class Graph {
     public int getNumVertices() {
 
         return n;
+    }
+
+    // int -> int
+    // Given a vertex represented by an integer return the heuristic for that vertex.
+    // Strategy: Structural Decomposition
+    public int getHeuristic(int i) {
+
+        if(i < 0 || i >= this.n) {
+            return 0;
+        } else {
+            return heuristic[i];
+        }
+    }
+
+    // int, int -> void
+    // EFFECT: Given a vertex represented by an integer and an integer heuristic set the heuristic for that vertex.
+    // Strategy: Structural Decomposition
+    public void setHeuristic(int i, int h) {
+
+        if(i >= 0 && i < this.n) {
+            heuristic[i] = h;
+        }
     }
 }

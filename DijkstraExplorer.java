@@ -50,7 +50,6 @@ public class DijkstraExplorer {
         for(int i = 0; i < size; i++) {
             H.inject(i, dist[i]);
         }
-        H.print();
 
         // Calculate the shortest distances.
         while(H.getSize() != 0) {
@@ -69,7 +68,6 @@ public class DijkstraExplorer {
                     dist[v] = newDistance;
                     prev[v] = u;
                     H.updateKey(v, dist[v]);
-                    H.print();
                 }
             }
         }

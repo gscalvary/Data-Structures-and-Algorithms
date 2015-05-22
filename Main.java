@@ -57,6 +57,11 @@
 //              have a negative cycle.  The algorithm iterates |V| - 1 times over all the edges in the graph calculating
 //              the distance from some given source node to each vertex during each iteration.  The run time for the
 //              algorithm is O(|V|*|E|).
+// A*         - Calculates the shortest path between a source and a destination node through a graph whose edges are
+//              annotated with a length and whose vertices are annotated with a heuristic.  This implementation is
+//              based on Dijkstra's algorithm so the lengths of the edges must be non-zero.  Like with Dijkstra the run
+//              time is dependant upon the priority queue implementation so if a binary heap is used the run time is
+//              less than O((|V| + |E|)log |V|) with an admissable heuristic.
 
 package com.oliver;
 
@@ -92,6 +97,7 @@ public class Main {
             System.out.println("12. Work with breadth first search.");
             System.out.println("13. Work with Dijkstra shortest path.");
             System.out.println("14. Work with Bellman-Ford shortest path.");
+            System.out.println("15. Work with A* shortest path.");
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -136,8 +142,11 @@ public class Main {
                 case 14:
                     bellmanFord();
                     break;
+                case 15:
+                    aStar();
+                    break;
                 default:
-                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 or 14.");
+                    System.out.println("Whoops, try again by typing 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 or 15.");
                     break;
             }
 
@@ -585,7 +594,7 @@ public class Main {
         do {
             System.out.println("\nOperations\n");
             System.out.println("1. Add an edge");
-            System.out.println("2. Remove and edge");
+            System.out.println("2. Remove an edge");
             System.out.println("3. Check if an edge exists");
             System.out.println("4. List out edges");
             System.out.println("5. List in edges");
@@ -935,6 +944,121 @@ public class Main {
             }
 
             System.out.println("\nDo you want to continue exploring Bellman-Ford searches? (y or n)");
+            ch = scanner.next().charAt(0);
+
+        } while (ch == 'Y' || ch == 'y');
+    }
+
+    private static void aStar() {
+
+        int size = 20;
+
+        Graph romania = new Graph(size);
+        String[] cities = new String[]{"Oradea", "Zerind", "Arad", "Timisoura", "Lugoj", "Mehadia", "Droheta", "Sibiu",
+        "Rimnicu Vikea", "Cralova", "Fagaras", "Pitesti", "Bucharest", "Giurgiu", "Neamt", "Iasi", "Vaslui", "Urziceni",
+        "Hirsova", "Eforie"};
+
+        System.out.println("\nYou'll be working with a simplified map of Romania to find the best route to the " +
+                "capital Bucharest where:\n");
+
+        for(int i = 0; i < size; i++) {
+            System.out.println(i + ": " + cities[i]);
+        }
+
+        romania.addEdge(0, 1, 71);
+        romania.addEdge(1, 0, 71);
+        romania.addEdge(0, 7, 151);
+        romania.addEdge(7, 0, 151);
+        romania.addEdge(1, 2, 75);
+        romania.addEdge(2, 1, 75);
+        romania.addEdge(2, 7, 140);
+        romania.addEdge(7, 2, 140);
+        romania.addEdge(2, 3, 118);
+        romania.addEdge(3, 2, 118);
+        romania.addEdge(3, 4, 111);
+        romania.addEdge(4, 3, 111);
+        romania.addEdge(4, 5, 70);
+        romania.addEdge(5, 4, 70);
+        romania.addEdge(5, 6, 75);
+        romania.addEdge(6, 5, 75);
+        romania.addEdge(6, 9, 120);
+        romania.addEdge(9, 6, 120);
+        romania.addEdge(7, 8, 80);
+        romania.addEdge(8, 7, 80);
+        romania.addEdge(7, 10, 99);
+        romania.addEdge(10, 7, 99);
+        romania.addEdge(8, 9, 146);
+        romania.addEdge(9, 8, 146);
+        romania.addEdge(8, 11, 97);
+        romania.addEdge(11, 8, 97);
+        romania.addEdge(9, 11, 138);
+        romania.addEdge(11, 9, 138);
+        romania.addEdge(10, 12, 211);
+        romania.addEdge(12, 10, 211);
+        romania.addEdge(11, 12, 101);
+        romania.addEdge(12, 11, 101);
+        romania.addEdge(12, 13, 90);
+        romania.addEdge(13, 12, 90);
+        romania.addEdge(12, 17, 85);
+        romania.addEdge(17, 12, 85);
+        romania.addEdge(14, 15, 87);
+        romania.addEdge(15, 14, 87);
+        romania.addEdge(15, 16, 92);
+        romania.addEdge(16, 15, 92);
+        romania.addEdge(16, 17, 142);
+        romania.addEdge(17, 16, 142);
+        romania.addEdge(17, 18, 98);
+        romania.addEdge(18, 17, 98);
+        romania.addEdge(18, 19, 86);
+        romania.addEdge(19, 18, 86);
+
+        romania.setHeuristic(0, 380);
+        romania.setHeuristic(1, 374);
+        romania.setHeuristic(2, 366);
+        romania.setHeuristic(3, 329);
+        romania.setHeuristic(4, 244);
+        romania.setHeuristic(5, 241);
+        romania.setHeuristic(6, 242);
+        romania.setHeuristic(7, 253);
+        romania.setHeuristic(8, 193);
+        romania.setHeuristic(9, 160);
+        romania.setHeuristic(10, 176);
+        romania.setHeuristic(11, 100);
+        romania.setHeuristic(12, 0);
+        romania.setHeuristic(13, 77);
+        romania.setHeuristic(14, 234);
+        romania.setHeuristic(15, 226);
+        romania.setHeuristic(16, 199);
+        romania.setHeuristic(17, 80);
+        romania.setHeuristic(18, 151);
+        romania.setHeuristic(19, 161);
+
+        char ch;
+        AStarExplorer ase = new AStarExplorer();
+
+        do {
+            System.out.println("\nEnter an integer representing the source node:\n");
+
+            int s = scanner.nextInt();
+            if(s < 0 || s >= size) {
+                System.out.println("That's not a valid node!");
+            } else {
+                int path[] = ase.getPath(romania, s, 12);
+                if (path.length == 0) {
+                    System.out.print("You're already in Bucharest!\n");
+                } else {
+                    System.out.println("\nShortest path from " + cities[s] + " to " + cities[12] + ": \n");
+                    for (int city : path) {
+                        if(city == 12) {
+                            System.out.print(cities[city]);
+                        } else {
+                            System.out.print(cities[city] + " -> ");
+                        }
+                    }
+                }
+            }
+
+            System.out.println("\nDo you want to continue exploring A* searches? (y or n)");
             ch = scanner.next().charAt(0);
 
         } while (ch == 'Y' || ch == 'y');
