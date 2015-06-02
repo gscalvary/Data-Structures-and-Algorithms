@@ -1,22 +1,22 @@
 package com.oliver;
 
-public class HashTableEntry {
+public class HashTableEntry<K, V> {
 
-    private String key;
-    private int value;
+    private K key;
+    private V value;
     private HashTableEntry nextEntry;
 
-    HashTableEntry(String key, int value) {
+    HashTableEntry (K key, V value) {
 
         this.key = key;
         this.value = value;
         nextEntry = null;
     }
 
-    //  -> String
+    //  -> Object<K>
     // Return the key of the hash entry.
     // Strategy: Domain Knowledge
-    public String getKey() {
+    public K getKey() {
 
         return key;
     }
@@ -29,18 +29,18 @@ public class HashTableEntry {
         return nextEntry;
     }
 
-    //  -> int
+    //  -> Object<V>
     // Return the value of the hash entry.
     // Strategy: Domain Knowledge
-    public int getValue() {
+    public V getValue() {
 
         return value;
     }
 
-    // int -> void
+    // Object<V> -> void
     // Set the value of the hash entry.
     // Strategy: Domain Knowledge
-    public void setValue(int value) {
+    public void setValue(V value) {
 
         this.value = value;
     }

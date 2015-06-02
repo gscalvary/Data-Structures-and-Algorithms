@@ -369,7 +369,7 @@ public class Main {
             switch(scanner.nextInt()) {
                 case 1:
                     System.out.println("Enter key and value:");
-                    table.insert(scanner.next(), scanner.nextInt());
+                    table.insert(scanner.next(), scanner.next());
                     break;
                 case 2:
                     System.out.println("Enter key:");

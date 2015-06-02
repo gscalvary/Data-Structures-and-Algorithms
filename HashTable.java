@@ -34,37 +34,37 @@ public class HashTable {
         }
     }
 
-    // String -> int
-    // Given a String key return its associated int value.
+    // Object<K> -> Object<V>
+    // Given a key return its associated value.
     // Strategy: Structural Decomposition
-    public int get(String key) {
+    public <K> Object get(K key) {
 
-        int hash = getHash(key) % tableSize;
+        int hash = getHash(key);
 
         if(table[hash] == null) {
-            return -1;
+            return null;
         } else {
             HashTableEntry entry = table[hash];
             while (entry != null && !entry.getKey().equals(key)) {
                 entry = entry.getNextEntry();
             }
             if(entry == null) {
-                return -1;
+                return null;
             } else {
                 return entry.getValue();
             }
         }
     }
 
-    // String, int -> void
-    // EFFECT: Given a string key and an int value insert them into the hash table.
+    // Object<K>, Object<V> -> void
+    // EFFECT: Given a key and a value insert them into the hash table.
     // Strategy: Structural Decomposition
-    public void insert(String key, int value) {
+    public <K, V> void insert(K key, V value) {
 
-        int hash = getHash(key) % tableSize;
+        int hash = getHash(key);
 
         if(table[hash] == null) {
-            table[hash] = new HashTableEntry(key, value);
+            table[hash] = new HashTableEntry<K, V>(key, value);
         } else {
             HashTableEntry entry = table[hash];
             while(entry.getNextEntry() != null && !entry.getKey().equals(key)) {
@@ -73,7 +73,7 @@ public class HashTable {
             if(entry.getKey().equals(key)) {
                 entry.setValue(value);
             } else {
-                entry.setNextEntry(new HashTableEntry(key, value));
+                entry.setNextEntry(new HashTableEntry<K, V>(key, value));
             }
         }
         
@@ -83,9 +83,9 @@ public class HashTable {
     // String -> void
     // EFFECT: Given a string key remove its entry from the hash table.
     // Strategy: Function Composition
-    public void remove(String key) {
+    public <K> void remove(K key) {
 
-        int hash = getHash(key) % tableSize;
+        int hash = getHash(key);
 
         if(table[hash] != null) {
             HashTableEntry prevEntry = null;
@@ -105,10 +105,10 @@ public class HashTable {
         }
     }
 
-    // String -> int
-    // Given a String key return an int hash value.
+    // Object<K> -> int
+    // Given a key return an int hash value.
     // Strategy: Function Composition
-    private int getHash(String key) {
+    private <K> int getHash(K key) {
 
         int hash = key.hashCode();
         hash %= tableSize;
