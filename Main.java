@@ -277,9 +277,9 @@ public class Main {
                 case 1:
                     System.out.println("Enter entry value:");
                     Object data = scanner.next();
-                    System.out.println("Enter entry integer key:");
+                    System.out.println("Enter entry key:");
                     Object key = scanner.nextInt();
-                    queue.inject(data, key);
+                    queue.inject(key, data);
                     break;
                 case 2:
                     System.out.println("Object returned: " + queue.eject() + "\n");
@@ -296,7 +296,7 @@ public class Main {
                     data = scanner.next();
                     System.out.println("Enter entry integer key:");
                     key = scanner.nextInt();
-                    queue.updateKey(data, key);
+                    queue.updateKey(key, data);
                     break;
                 default:
                     System.out.println("Whoops, try again by typing 1, 2, 3, 4 or 5.");

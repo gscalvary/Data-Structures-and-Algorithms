@@ -9,45 +9,35 @@ public class PriorityQueue {
         list = new LinkedList();
     }
 
-    private class PQEntry {
+    private class PQEntry<K, V> {
 
-        private Object data;
-        private Object key;
+        private V data;
+        private K key;
 
-        public PQEntry(Object data, Object key) {
+        public PQEntry(K key, V data) {
 
             this.data = data;
             this.key = key;
         }
 
-        public Object getData() {
+        public V getData() {
 
             return data;
         }
 
-        public void setData(Object data) {
-
-            this.data = data;
-        }
-
-        public Object getKey() {
+        public K getKey() {
 
             return key;
         }
-
-        public void setKey(Object key) {
-
-            this.key = key;
-        }
     }
 
-    // Object, Object -> void
+    // Object<K>, Object<V> -> void
     // EFFECT: Given an object containing data and an object with a key add it to the end of the list.
     // Strategy: Function Composition
-    public void inject(Object data, Object key) {
+    public <K, V> void inject(K key, V data) {
 
-        PQEntry pqEntry = new PQEntry(data, key);
-        LinkedListEntry entry = new LinkedListEntry(pqEntry);
+        PQEntry pqEntry = new PQEntry<K, V>(key, data);
+        LinkedListEntry entry = new LinkedListEntry<PQEntry>(pqEntry);
         list.addTail(entry);
     }
 
@@ -76,11 +66,11 @@ public class PriorityQueue {
         }
     }
 
-    // Object, Object -> void
+    // Object<K>, Object<V> -> void
     // EFFECT: Given a data object and a new key value "update" it in the queue by deleting it's former entry and
     // adding it as a new entry.
     // Strategy: Function Composition
-    public void updateKey(Object data, Object key) {
+    public <K, V> void updateKey(K key, V data) {
 
         int size = list.getSize();
 
@@ -90,7 +80,7 @@ public class PriorityQueue {
                 newEntry = (PQEntry)list.getEntry(i).getValue();
                 if(data.equals(newEntry.getData())) {
                     list.remove(i);
-                    inject(data, key);
+                    inject(key, data);
                     break;
                 }
             }
