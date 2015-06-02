@@ -7,12 +7,12 @@ public class Queue extends ListBasedStructure {
         super();
     }
 
-    // Object -> void
+    // Object<T> -> void
     // EFFECT: Given an object add it to the end of the list.
     // Strategy: Function Composition
-    public void inject(Object data) {
+    public <T> void inject(T data) {
 
-        LinkedListEntry entry = new LinkedListEntry(data);
+        LinkedListEntry entry = new LinkedListEntry<T>(data);
         list.addTail(entry);
     }
 

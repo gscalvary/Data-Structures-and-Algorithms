@@ -7,12 +7,12 @@ public class Stack extends ListBasedStructure{
         super();
     }
 
-    // Object -> void
+    // Object<T> -> void
     // EFFECT: Given an object add it to the head of the list.
     // Strategy: Function Composition
-    public void inject(Object data) {
+    public <T> void inject(T data) {
 
-        LinkedListEntry entry = new LinkedListEntry(data);
+        LinkedListEntry entry = new LinkedListEntry<T>(data);
         list.addHead(entry);
     }
 

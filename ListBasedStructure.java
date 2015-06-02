@@ -9,7 +9,7 @@ abstract class ListBasedStructure {
         list = new LinkedList();
     }
 
-    abstract void inject(Object data);
+    abstract <T> void inject(T data);
 
     //  -> Object
     // EFFECT: Remove and return the first object in the list.
