@@ -1,28 +1,28 @@
 package com.oliver;
 
-public class LinkedListEntry {
+public class LinkedListEntry<T> {
 
-    private Object value;
+    private T value;
     private LinkedListEntry next;
 
-    public LinkedListEntry(Object value) {
+    public LinkedListEntry (T value) {
 
         this.value = value;
         next = null;
     }
 
-    //  -> Object
+    //  -> Object<T>
     // Return the value of the entry.
     // Strategy: Domain Knowledge
-    public Object getValue() {
+    public T getValue() {
 
         return value;
     }
 
-    // Object -> void
+    // Object<T> -> void
     // Set the value of the entry.
     // Strategy: Domain Knowledge
-    public void setValue(Object value) {
+    public void setValue(T value) {
 
         this.value = value;
     }

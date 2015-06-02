@@ -98,6 +98,7 @@ public class Main {
             System.out.println("13. Work with Dijkstra shortest path.");
             System.out.println("14. Work with Bellman-Ford shortest path.");
             System.out.println("15. Work with A* shortest path.");
+            System.out.println();
 
             switch(scanner.nextInt()) {
                 case 1:
@@ -174,12 +175,12 @@ public class Main {
             switch(scanner.nextInt()) {
                 case 1:
                     System.out.println("Enter entry value:");
-                    LinkedListEntry entry = new LinkedListEntry(scanner.next());
+                    LinkedListEntry entry = new LinkedListEntry<String>(scanner.next());
                     list.addHead(entry);
                     break;
                 case 2:
                     System.out.println("Enter entry value:");
-                    LinkedListEntry entry1 = new LinkedListEntry(scanner.next());
+                    LinkedListEntry entry1 = new LinkedListEntry<String>(scanner.next());
                     list.addTail(entry1);
                     break;
                 case 3:
@@ -192,10 +193,11 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("Enter the index of the entry to get:");
-                    if(list.getEntry(scanner.nextInt()) == null) {
-                        System.out.println("\nThat's not a valid entry!");
-                    } else {
-                        System.out.println("\nThat entries value is: " + list.getEntry(scanner.nextInt()).getValue());
+                    int index = scanner.nextInt();
+                    try{
+                        System.out.println("\nThat entries value is: " + list.getEntry(index).getValue());
+                    } catch(IndexOutOfBoundsException e) {
+                        System.out.println("\n" + e.getMessage());
                     }
                     break;
                 case 5:

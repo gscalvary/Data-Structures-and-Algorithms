@@ -80,7 +80,8 @@ public class LinkedList {
     public LinkedListEntry getEntry(int index) {
 
         // Do we have a valid index?
-        if(index < 1 || index > size) return null;
+        if(index < 1 || index > size)
+            throw new IndexOutOfBoundsException("Must be between 1 and " + size + " inclusively.");
 
         LinkedListEntry entry = head;
         for(int i = 1; i < index; i++) {
